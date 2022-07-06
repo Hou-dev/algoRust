@@ -1,24 +1,26 @@
-fn findSmallest(v: &[u32]) -> usize {
-    let mut smallest = v[0];
-    let mut smallestIndex = 0;
+fn findSmallest(v: &mut Vec<u32>) -> u32 {
+    let mut smallest = v[0] as u32;
+    let mut smallestIndex = 0 as u32;
     for val in 1..v.len(){
         if v[val] < smallest{
             smallest = v[val];
-            smallestIndex = val;
+            smallestIndex = val as u32;
         }
     }
-    return smallestIndex;
+    return smallest;
 }
 
-fn selectionSort(v: &[u32]){
+fn selectionSort(v: &mut Vec<u32>){
     let mut vec = Vec::new();
     for val in 0..v.len(){
-        let mut smallest = findSmallest(&v);
-        vec.append(v.pop(smallest))
+        let mut smallest = findSmallest(v);
+        vec.push(smallest);
+        v.retain(|x| *x != smallest);
     }
+    println!("{:?}", vec);
 }
 
 fn main(){
-    let v = vec![5, 3, 2, 5, 10, 7];
-    findSmallest(&v);
+    let mut v = vec![5, 3, 2, 6, 10, 7];
+    selectionSort(&mut v);
 }
